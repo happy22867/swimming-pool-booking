@@ -44,6 +44,7 @@ const handleConfirmPayment = async () => {
     const data = await response.json();
     console.log('data',data);
     if (response.ok) {
+      localStorage.removeItem("emailVerified");
       setMessage("Payment confirmed! Redirecting...");
       setTimeout(() => {
         navigate(`/booking-confirmation/${data?._id}`, {

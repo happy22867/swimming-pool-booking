@@ -1,6 +1,6 @@
 const bookingRoutes = require('./Routess/bookingRoutes');
 
-
+const otpRoutes = require("./Routess/otpRoutes");
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -35,6 +35,7 @@ app.use(express.json({
 // ✅ Correct import
 
 app.use("/api/auth",authRoutes)
+app.use("/api/otp", otpRoutes);
 
 
 app.use("/api/pools",poolRoutes)

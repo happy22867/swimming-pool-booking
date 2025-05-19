@@ -15,6 +15,16 @@ export default function BookPool() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+
+      // 1. Redirect if email not verified
+  if (localStorage.getItem("emailVerified") !== "true") {
+    navigate("/verify-email", { state: { poolId } });
+    return;  // Prevent fetching pool if redirecting
+  }
+
+
+
+
     const fetchPool = async () => {
       try {
         const res = await fetch(`http://localhost:5000/api/pools/${poolId}`);

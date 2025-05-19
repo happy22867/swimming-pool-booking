@@ -18,6 +18,7 @@ import MyBookings from "./pages/MyBooking";
 import Feedback from "./pages/Feedback";
 import Invoice from "./pages/Invoice";
 import Payment from "./pages/Payment";
+import EmailVerification from "./pages/EmailVerification";
 
 
 
@@ -45,6 +46,8 @@ export default function App() {
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/invoice" element={<Invoice />} />
          <Route path="/payment/:bookingId" element={<Payment/>} />
+         <Route path="/verify-email" element={<EmailVerification />} />
+         
        
 
       </Routes>

@@ -8,7 +8,7 @@ const createBooking = async (req, res) => {
     const userId = req.user.id;
 
     // Example booking creation
-    const booking = new Booking({ pool: poolId, user: userId, date, time, guests });
+    const booking = new Booking({ pool: poolId,  email: user.email, user: userId, date, time, guests });
     await booking.save();
 
     return res.status(201).json({

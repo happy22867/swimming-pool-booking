@@ -6,6 +6,7 @@ const bookingSchema = new mongoose.Schema({
     ref: "Pool",
     required: true,
   },
+   email: { type: String },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
