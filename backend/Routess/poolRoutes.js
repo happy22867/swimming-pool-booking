@@ -3,7 +3,9 @@ const verifyAdmin = require("../middleware/verifyAdmin");
 const express = require("express");
 const router = express.Router();
 const Pool = require("../models/Pool");
-// import admin middleware
+require('dotenv').config();
+  
+// import admin middleware-
 
 // GET - Public: List all pools
 router.get("/", async (req, res) => {
@@ -17,9 +19,11 @@ router.get("/", async (req, res) => {
 
 // POST - Admin only: Add a new pool
 router.post("/", verifyAdmin, async (req, res) => {
+
   try {
     const newPool = new Pool(req.body);
     const saved = await newPool.save();
+    
     res.status(201).json(saved);
   } catch (err) {
     res.status(400).json({ message: err.message });

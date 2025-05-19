@@ -1,17 +1,22 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Navbar from "../components/homepage/Navbar";
 import Footer from "../components/homepage/Footer";
- // import your context
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
-
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const { login } = useContext(AuthContext); // get login function from context
+  const { login, user } = useContext(AuthContext); // get login and user from context
   const navigate = useNavigate();
+
+  // Redirect to homepage if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,8 +39,8 @@ export default function LoginPage() {
       // On successful login, save user and token globally
       login(data.user, data.token);
 
-      // Redirect or show dashboard etc.
-      navigate("/home");
+      // Redirect to homepage
+      navigate("/");
     } catch (err) {
       setError("Server error");
     }
@@ -49,7 +54,10 @@ export default function LoginPage() {
           <h2 className="text-3xl sm:text-4xl font-bold text-indigo-700 mb-6 sm:mb-8 text-center">
             Login to SwimmingGo
           </h2>
-          <form className="space-y-5 sm:space-y-6 text-base sm:text-lg" onSubmit={handleSubmit}>
+          <form
+            className="space-y-5 sm:space-y-6 text-base sm:text-lg"
+            onSubmit={handleSubmit}
+          >
             <div>
               <label className="block font-medium text-gray-700 mb-1">Email</label>
               <input
@@ -78,6 +86,17 @@ export default function LoginPage() {
               Login
             </button>
           </form>
+
+          {/* Signup prompt below form */}
+          <p className="mt-6 text-center text-gray-700 italic text-lg">
+            Don’t have an account?{" "}
+            <Link
+              to="/signup"
+              className="text-indigo-600 font-semibold hover:underline focus:outline-none"
+            >
+              Sign up here
+            </Link>
+          </p>
         </div>
       </div>
       <Footer />

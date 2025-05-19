@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/homepage/Footer";
 import Navbar from "../components/homepage/Navbar";
+import { isLoggedIn } from "../utils/auth";
 
 export default function PoolsPage() {
   const [pools, setPools] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/pools") // your backend API endpoint
+    fetch("http://localhost:5000/api/pools")
       .then((res) => res.json())
       .then((data) => {
         setPools(data);
@@ -18,6 +21,14 @@ export default function PoolsPage() {
         setLoading(false);
       });
   }, []);
+
+   const handleBookNow = (poolId) => {
+    if (!isLoggedIn()) {
+      navigate("/login");
+    } else {
+      navigate(`/book/${poolId}`);
+    }
+  };
 
   if (loading) return <div>Loading pools...</div>;
 
@@ -32,41 +43,36 @@ export default function PoolsPage() {
         <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 max-w-6xl mx-auto">
           {pools.map((pool) => (
             <div
-              key={pool._id}  // note _id from MongoDB
+              key={pool._id}
               className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-transform hover:-translate-y-1 flex flex-col"
             >
               <img
-                src={pool.imageUrl || "https://picsum.photos/400/250"} // fallback image
+                src={pool.imageUrl || "https://picsum.photos/400/250"}
                 alt={`Pool ${pool._id}`}
                 className="w-full h-48 object-cover"
-                loading="lazy"
               />
               <div className="p-6 flex flex-col flex-grow">
                 <h2 className="text-xl font-bold text-indigo-600 mb-3 italic">
-                  🏊 Pool #{pool._id}
+                  🏊 {pool.name}
                 </h2>
                 <p className="text-gray-700 italic mb-1">
-                  📍 <span className="font-semibold not-italic">Location:</span>{" "}
-                  {pool.location}
+                  📍 <span className="font-semibold">Location:</span> {pool.location}
                 </p>
                 <p className="text-gray-700 italic mb-1">
-                  💵 <span className="font-semibold not-italic">Entry Fee:</span> ₹
-                  {pool.entryFee}
+                  💵 <span className="font-semibold">Entry Fee:</span> ₹{pool.entry}
                 </p>
                 <p className="text-gray-700 italic mb-1">
-                  ⏰ <span className="font-semibold not-italic">Timing:</span>{" "}
-                  {pool.timing}
+                  ⏰ <span className="font-semibold">Timing:</span> {pool.timing}
                 </p>
                 <p className="text-gray-700 italic mb-4">
-                  🎟️ <span className="font-semibold not-italic">Available Slots:</span>{" "}
-                  {pool.slots}
-                </p>
-                <p className="text-gray-600 italic mb-6 leading-relaxed text-justify">
                   {pool.description}
                 </p>
-                <button className="mt-auto w-full bg-indigo-600 text-white py-2 rounded-xl font-medium hover:bg-indigo-700 transition duration-300">
-                  Book Now
-                </button>
+                 <button
+                onClick={() => handleBookNow(pool._id)}
+                className="mt-6 w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition duration-300"
+              >
+                Book Now
+              </button>
               </div>
             </div>
           ))}

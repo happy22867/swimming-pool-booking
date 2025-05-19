@@ -2,12 +2,15 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
+
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
 
 // Signup
 router.post("/signup", async (req, res) => {
+  console.log("dhffd");
   try {
     const { username, email, password } = req.body;
 
@@ -22,11 +25,17 @@ router.post("/signup", async (req, res) => {
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1d" });
 
     res.status(201).json({ token, user: { id: user._id, username, email } });
-  } catch (error) {
-    console.error("Signup error:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
+  }catch (error) {
+  console.error("Signup error:", error.message || error);
+  res.status(500).json({ message: error.message || "Server error" });
+}
+
+})
+
+
+router.get('/company',async (req,res)=>{
+   res.json("testing");
+})
 
 // Login
 router.post("/login", async (req, res) => {

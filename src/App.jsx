@@ -19,6 +19,8 @@ import Feedback from "./pages/Feedback";
 import Invoice from "./pages/Invoice";
 import Payment from "./pages/Payment";
 
+
+
 export default function App() {
   return (
    
@@ -30,16 +32,19 @@ export default function App() {
            <Route path="/pools" element={<PoolsPage />} />
         <Route  path="/contact" element={<ContactPage />} />
          
+    <Route path="/book/:poolId" element={<BookPool/>} />
+    <Route path="/booking-confirmation/:bookingId" element={<BookingConfirmation/>} />
 
         <Route  path="/login" element={<LoginPage />} />
 
         <Route  path="/signup" element={<Signup />} />
         <Route  path="*" element={<NotFoundPage />} />
-          <Route path="/booking-confirmation" element={<BookingConfirmation/>} />
+          <Route path="/booking-confirmation/:bookingId" element={<BookingConfirmation />} />
+
         <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/invoice" element={<Invoice />} />
-        <Route path="/payment" element={<Payment />} />
+         <Route path="/payment/:bookingId" element={<Payment/>} />
        
 
       </Routes>

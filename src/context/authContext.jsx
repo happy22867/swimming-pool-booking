@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     setToken(jwtToken);
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", jwtToken);
-  };
+  };  
 
   // Logout function
   const logout = () => {

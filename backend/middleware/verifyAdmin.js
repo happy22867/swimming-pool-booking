@@ -4,7 +4,7 @@ const User = require("../models/User");
 const verifyAdmin = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]; // Bearer TOKEN
   if (!token) return res.status(401).json({ message: "Access Denied: No token provided" });
-
+  console.log("dfhfla");  
   try {
     const JWT_SECRET = process.env.JWT_SECRET;
 
