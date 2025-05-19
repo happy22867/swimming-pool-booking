@@ -19,7 +19,7 @@ export default function MyBookings() {
     const fetchBookings = async () => {
       try {
         const token = localStorage.getItem("token"); // make sure this matches your login token storage
-        const response = await axios.get("http://localhost:5000/api/bookings/my", {
+        const response = await axios.get("http://localhost:5000/api/bookings/", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

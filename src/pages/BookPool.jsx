@@ -45,11 +45,11 @@ export default function BookPool() {
       console.log("Response from backend:", data);
 
       if (res.ok) {
-        console.log("Booking ID:", data.booking?._id);
+        console.log("Booking ID:", data?.booking?._id);
       
 
         // ✅ Navigate to payment with all booking data
-        navigate(`/payment/${booking._id}`, {
+        navigate(`/payment/${data?.booking._id}`, {
           state: {
             booking: {
               poolId,

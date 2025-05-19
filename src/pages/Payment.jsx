@@ -32,24 +32,21 @@ const handleConfirmPayment = async () => {
   return;
 }
 
-    const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/confirm-payment`, {
-      method: "POST",
+    const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}`, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-       body: JSON.stringify(bookingData),
-      // maybe send some payment info if needed, else no body
     });
 
 
 
     const data = await response.json();
-
+    console.log('data',data);
     if (response.ok) {
       setMessage("Payment confirmed! Redirecting...");
       setTimeout(() => {
-        navigate(`/booking-confirmation/${data.booking._id}`, {
+        navigate(`/booking-confirmation/${data?._id}`, {
           state: { booking: data.booking },
         });
       }, 1500);
